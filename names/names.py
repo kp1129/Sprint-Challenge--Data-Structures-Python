@@ -58,6 +58,7 @@ duplicates = []  # Return the list of duplicates in this data structure
 # Replace the nested for loops below with your improvements
 
 # old algo - nested for loop. runtime complexity: quadratic time, O(n^2)
+# update, exponential time
 # for name_1 in names_1:
 #     for name_2 in names_2:
 #         if name_1 == name_2:
