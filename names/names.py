@@ -1,3 +1,46 @@
+# import binary search tree node from previous hw assignment
+class BSTNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+    # Insert the given value into the tree
+    def insert(self, value):
+        # check if value is less than self.value
+        if value < self.value:
+            # if no left child, insert value here
+            if self.left is None:
+                self.left = BSTNode(value)
+            # else repeat the process on left subtree
+            else:
+                self.left.insert(value)
+        # check if value is greater than  (or equal) self.value
+        elif value >= self.value:
+            # if no right child, insert value here
+            if self.right is None:
+                self.right = BSTNode(value)
+            # else repeat the process on right subtree
+            else:
+                self.right.insert(value)
+
+    # Return True if the tree contains the value
+    # False if it does not
+    def contains(self, target):
+        if target == self.value:
+            return True
+        elif target < self.value:
+            if self.left is None:
+                return False
+            else:
+                return self.left.contains(target)    
+        elif target > self.value:
+            if self.right is None:
+                return False
+            else:
+                return self.right.contains(target)    
+# -------------------------------------------------------
+
 import time
 
 start_time = time.time()
@@ -13,10 +56,28 @@ f.close()
 duplicates = []  # Return the list of duplicates in this data structure
 
 # Replace the nested for loops below with your improvements
-for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
-            duplicates.append(name_1)
+
+# old algo - nested for loop. runtime complexity: quadratic time, O(n^2)
+# update, exponential time
+# for name_1 in names_1:
+#     for name_2 in names_2:
+#         if name_1 == name_2:
+#             duplicates.append(name_1)
+
+# my solution
+# convert names_1 into a binary search tree
+# then search binary search tree to see if it 
+# contains elements from names_2 and add them
+# to duplicates list
+
+bst = BSTNode(names_1[0])
+for name in names_1:
+    bst.insert(name)
+
+for name in names_2:
+    if bst.contains(name):
+        duplicates.append(name)    
+
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
